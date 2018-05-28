@@ -4,6 +4,7 @@
 
 const icons = ["fa fa-diamond", "fa fa-paper-plane-o", "fa fa-anchor", "fa fa-bolt", "fa fa-cube", "fa fa-leaf", "fa fa-bomb", "fa fa-bicycle", "fa fa-diamond", "fa fa-paper-plane-o", "fa fa-anchor", "fa fa-bolt", "fa fa-cube", "fa fa-leaf", "fa fa-bomb", "fa fa-bicycle"];
 
+shuffle(icons);
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -16,60 +17,20 @@ const cardsContainer = document.querySelector('.deck');
 let openedCards = [];
 let matchedCards = [];
 
-// Create the cards
+// Starting the game Function
 
-for (let i = 0; i < icons.length; i++) {
+function startGame() {
+    for (let i = 0; i < icons.length; i++) {
     const card = document.createElement('li');
     card.classList.add("card");
     card.innerHTML = `<i class="${icons[i]}"></i>`;
     cardsContainer.appendChild(card);
     
-    // Create the click Event 
+    clickCards(card);
     
-    card.addEventListener("click", function (){
-        
-        const currentCard = this;
-        const previousCard = openedCards[0];
-        
-        if (openedCards.length === 1) {
-    
-            card.classList.add("open", "show");
-            openedCards.push(this);
-            
-            // Comparing Cards
-            
-            if (currentCard.innerHTML === previousCard.innerHTML) {
-                
-                // Matched Cards
-                
-                currentCard.classList.add("match");
-                previousCard.classList.add("match");
-                
-                matchedCards.push(currentCard, previousCard);
-                
-                openedCards = [];
-                
-                // Ending the game if all cards are matched
-                
-                isOver();
-                
-            } else {
-                
-                currentCard.classList.remove("open", "show");
-                previousCard.classList.remove("open", "show");
-                
-                openedCards = [];
-            }
-            
-        } else {
-            
-            currentCard.classList.add("open", "show");
-            openedCards.push(this);
-        }
-        
-    })
-}
+}}
 
+startGame();
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -86,13 +47,6 @@ function shuffle(array) {
     return array;
 }
 
-
-function isOver() {
-    if(icons.length === matchedCards.length) {
-        alert("Game is over");
-    }
-}
-
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -103,3 +57,69 @@ function isOver() {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+
+// Create the click Event 
+    
+function clickCards(card){
+    card.addEventListener("click", function (){
+        
+        const currentCard = this;
+        const previousCard = openedCards[0];
+        
+        if (openedCards.length === 1) {
+    
+            card.classList.add("open", "show", "disable");
+            openedCards.push(this);
+            
+            // Comparing Cards
+            
+            comaparingCards(currentCard, previousCard);
+            
+        } else {
+            
+            currentCard.classList.add("open", "show", "disable");
+            openedCards.push(this);
+        }
+        
+    });
+}
+
+// Comparing Cards Function
+
+function comaparingCards(currentCard, previousCard) {
+    if (currentCard.innerHTML === previousCard.innerHTML) {
+                
+                // Matched Cards
+                
+                currentCard.classList.add("match");
+                previousCard.classList.add("match");
+                
+                matchedCards.push(currentCard, previousCard);
+                
+                openedCards = [];
+                
+                // Ending the game if all cards are matched
+                
+                isOver();
+                
+            } else {
+                
+                setTimeout(function(){
+                    previousCard.classList.remove("open", "show", "disable");
+                    currentCard.classList.remove("open", "show", "disable");                
+                },500);
+
+                
+                openedCards = [];
+            }
+            
+        }
+
+// Checking if the game is over Function
+
+function isOver() {
+    if(icons.length === matchedCards.length) {
+        alert("Game is over");
+    }
+}
