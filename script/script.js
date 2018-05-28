@@ -14,6 +14,7 @@ const icons = ["fa fa-diamond", "fa fa-paper-plane-o", "fa fa-anchor", "fa fa-bo
 const cardsContainer = document.querySelector('.deck');
 
 let openedCards = [];
+let matchedCards = [];
 
 // Create the cards
 
@@ -26,8 +27,46 @@ for (let i = 0; i < icons.length; i++) {
     // Create the click Event 
     
     card.addEventListener("click", function (){
-        card.classList.add("open", "show");
-        openedCards.push(this);
+        
+        const currentCard = this;
+        const previousCard = openedCards[0];
+        
+        if (openedCards.length === 1) {
+    
+            card.classList.add("open", "show");
+            openedCards.push(this);
+            
+            // Comparing Cards
+            
+            if (currentCard.innerHTML === previousCard.innerHTML) {
+                
+                // Matched Cards
+                
+                currentCard.classList.add("match");
+                previousCard.classList.add("match");
+                
+                matchedCards.push(currentCard, previousCard);
+                
+                openedCards = [];
+                
+                // Ending the game if all cards are matched
+                
+                isOver();
+                
+            } else {
+                
+                currentCard.classList.remove("open", "show");
+                previousCard.classList.remove("open", "show");
+                
+                openedCards = [];
+            }
+            
+        } else {
+            
+            currentCard.classList.add("open", "show");
+            openedCards.push(this);
+        }
+        
     })
 }
 
@@ -47,6 +86,12 @@ function shuffle(array) {
     return array;
 }
 
+
+function isOver() {
+    if(icons.length === matchedCards.length) {
+        alert("Game is over");
+    }
+}
 
 /*
  * set up the event listener for a card. If a card is clicked:
