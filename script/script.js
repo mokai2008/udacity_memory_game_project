@@ -113,7 +113,7 @@ function comaparingCards(currentCard, previousCard) {
                 
                 openedCards = [];
             }
-            
+            addMoves();
         }
 
 // Checking if the game is over Function
@@ -122,4 +122,35 @@ function isOver() {
     if(icons.length === matchedCards.length) {
         alert("Game is over");
     }
+}
+
+// Restart the Game
+
+const restartBtn = document.querySelector('.restart');
+
+restartBtn.addEventListener('click', function(){
+   
+    // Delete all cards in the deck
+    
+    cardsContainer.innerHTML = "";
+    
+    // Start the Game again
+    
+    startGame();
+     
+    // Empty any variable that may contain any data from previous game
+    
+    matchedCards = [];
+    
+});
+
+// Counting the moves 
+
+const movesCount = document.querySelector('.moves');
+
+let moves = 0;
+
+function addMoves() {
+    moves++;
+    movesCount.innerHTML = moves;
 }
