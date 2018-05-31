@@ -120,7 +120,7 @@ function comaparingCards(currentCard, previousCard) {
 
 function isOver() {
     if(icons.length === matchedCards.length) {
-        alert("Game is over");
+        alert(`Congratulations!\n You took ${moves} moves`);
     }
 }
 
@@ -142,6 +142,14 @@ restartBtn.addEventListener('click', function(){
     
     matchedCards = [];
     
+    moves = 0;
+    
+    movesCount.innerHTML = 0;
+
+    starsCount.innerHTML = star + star + star;
+
+
+
 });
 
 // Counting the moves 
@@ -153,4 +161,22 @@ let moves = 0;
 function addMoves() {
     moves++;
     movesCount.innerHTML = moves;
+    rating();
 }
+
+// Ratings
+
+const starsCount = document.querySelector(".stars");
+const star = `<li><i class="fa fa-star"></i></li>`;
+starsCount.innerHTML = star + star + star;
+function rating() {
+
+    if( moves < 10) {
+        starsCount.innerHTML = star + star + star;
+    } else if( moves < 15) {
+        starsCount.innerHTML = star + star;
+    } else {
+        starsCount.innerHTML = star;
+    }
+}
+
