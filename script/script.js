@@ -147,7 +147,8 @@ restartBtn.addEventListener('click', function(){
     movesCount.innerHTML = 0;
 
     starsCount.innerHTML = star + star + star;
-
+    
+    shuffle(icons);
 
 
 });
