@@ -27,6 +27,9 @@ function startGame() {
     cardsContainer.appendChild(card);
     
     clickCards(card);
+            
+     // Add Click Event to each Card
+    click(card);
     
 }}
 
@@ -120,7 +123,10 @@ function comaparingCards(currentCard, previousCard) {
 
 function isOver() {
     if(icons.length === matchedCards.length) {
-        alert(`Congratulations!\n You took ${moves} moves`);
+        
+        stopTimer();
+
+        alert(`Congratulations!\n You took ${moves} moves and spent ${totalSeconds} Seconds`);
     }
 }
 
@@ -149,6 +155,12 @@ restartBtn.addEventListener('click', function(){
     starsCount.innerHTML = star + star + star;
     
     shuffle(icons);
+    
+    // Rest the Timer
+    stopTimer();
+    isFirstClick = true;
+    totalSeconds = 0;
+    timerCount.innerHTML = totalSeconds + "s";
 
 
 });
@@ -181,3 +193,57 @@ function rating() {
     }
 }
 
+// Start Timer 
+
+
+const timerCount = document.querySelector(".timer");
+let liveTimer,
+    totalSeconds = 0;
+
+// Set the default value to the timer's container
+timerCount.innerHTML = totalSeconds + 's';
+
+ function startTimer() {
+    liveTimer = setInterval(function() {
+        // Increase the totalSeconds by 1
+        totalSeconds++;
+        // Update the HTML Container with the new time
+        timerCount.innerHTML = totalSeconds + 's';
+    }, 1000);
+}
+
+// Stop Timer 
+
+function stopTimer() {
+    clearInterval(liveTimer);
+}
+
+
+// First Click Indicator
+let isFirstClick = true;
+
+// Click Function
+function click(card) {
+
+    // Card Click Event
+    card.addEventListener("click", function() {
+
+        /*
+        * At the first click, the condition will be true,
+        * and our code below will get executed!
+        * 
+        * We will call our `startTimer` function,
+        * Then, set the `isFirstClick` to `false`, so in the next click,
+        * it will be `if(false)` and nothing will happen, as we don't have an `else`!
+        * 
+        * THAT'S EXACTLY what we want!
+        */
+        if(isFirstClick) {
+            // Start our timer
+            startTimer();
+            // Change our First Click indicator's value
+            isFirstClick = false;
+        }
+    });
+}
+    
