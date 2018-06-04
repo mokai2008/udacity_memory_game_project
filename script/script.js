@@ -126,7 +126,7 @@ function isOver() {
         
         stopTimer();
 
-        alert(`Congratulations!\n You took ${moves} moves and spent ${totalSeconds} Seconds`);
+        alert(`Congratulations!\n You took ${moves} moves and spent ${totalSeconds} Seconds with ${starCounter} stars`);
     }
 }
 
@@ -179,17 +179,21 @@ function addMoves() {
 
 // Ratings
 
+let starCounter = 0;
 const starsCount = document.querySelector(".stars");
 const star = `<li><i class="fa fa-star"></i></li>`;
 starsCount.innerHTML = star + star + star;
 function rating() {
 
-    if( moves < 10) {
+    if( moves < 15) {
         starsCount.innerHTML = star + star + star;
-    } else if( moves < 15) {
+        starCounter = 3;
+    } else if( moves < 20) {
         starsCount.innerHTML = star + star;
+        starCounter = 2;
     } else {
         starsCount.innerHTML = star;
+        starCounter = 1;
     }
 }
 
