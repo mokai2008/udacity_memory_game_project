@@ -140,13 +140,11 @@ restartBtn.addEventListener('click', function(){
     
     cardsContainer.innerHTML = "";
     
-    // Start the Game again
-    
-    startGame();
      
     // Empty any variable that may contain any data from previous game
     
     matchedCards = [];
+    openedCards = [];
     
     moves = 0;
     
@@ -161,7 +159,10 @@ restartBtn.addEventListener('click', function(){
     isFirstClick = true;
     totalSeconds = 0;
     timerCount.innerHTML = totalSeconds + "s";
-
+    
+    // Start the Game again
+    
+    startGame();
 
 });
 
