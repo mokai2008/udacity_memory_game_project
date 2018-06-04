@@ -126,7 +126,7 @@ function isOver() {
         
         stopTimer();
 
-        alert(`Congratulations!\n You took ${moves} moves and spent ${totalSeconds} Seconds with ${starCounter} stars`);
+        alert(`Congratulations!\n You took ${moves} moves and spent ${totalSeconds} Seconds with ${starCounter} stars rating`);
     }
 }
 
